@@ -53,17 +53,16 @@ func parseInput() (int, int) {
 
 func findCommonElem(compart1 string, compart2 string) rune {
 	var result rune
-	for _, i := range []rune(compart1) {
-		for _, j := range []rune(compart2) {
-			if i == j {
-				result = i
-				break
-			}
-		}
-		if result != 0 {
+	set1 := toSortedSet(compart1)
+	set2 := toSortedSet(compart2)
+
+	for key := range set1 {
+		if set2[key] {
+			result = key
 			break
 		}
 	}
+
 	return result
 }
 
@@ -72,20 +71,25 @@ func findCommonGroupElem(
 	compart2 string,
 	compart3 string) rune {
 	var result rune
-	fmt.Println("Finding badge")
-	fmt.Println(compart1, compart2, compart3)
-	for _, i := range []rune(compart1) {
-		for _, j := range []rune(compart2) {
-			for _, k := range []rune(compart3) {
-				if i == j && i == k {
-					result = i
-					break
-				}
-			}
-		}
-		if result != 0 {
+
+	set1 := toSortedSet(compart1)
+	set2 := toSortedSet(compart2)
+	set3 := toSortedSet(compart3)
+
+	for key := range set1 {
+		if set2[key] && set3[key] {
+			result = key
 			break
 		}
+	}
+
+	return result
+}
+
+func toSortedSet(items string) map[rune]bool {
+	result := make(map[rune]bool)
+	for _, val := range items {
+		result[val] = true
 	}
 	return result
 }
