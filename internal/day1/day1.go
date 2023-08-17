@@ -41,7 +41,7 @@ func parseInput() []int {
 	}
 	updateResult(result, array)
 
-	fmt.Println(result)
+	file.Close()
 	return result
 }
 
