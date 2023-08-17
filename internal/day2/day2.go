@@ -79,7 +79,6 @@ func playRound(p1 string, p2 string) int {
 
 func playStrategy(p1 string, strat string) int {
 	currentStrategy := strategy[strat]
-	fmt.Println(p1, currentStrategy)
 	var p2 string
 	for key := range player2 {
 		if outcome[p1+key] == currentStrategy {
