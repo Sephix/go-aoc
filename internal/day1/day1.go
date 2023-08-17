@@ -10,6 +10,7 @@ import (
 var input string = "/assets/day1input.txt"
 
 func PrintResult() {
+	fmt.Println("--- Day 1 ---")
 	best3 := parseInput()
 	fmt.Printf("Day 1 part1: %d\n", best3[0])
 	fmt.Printf("Day 1 part2: %d\n", sum(best3))
