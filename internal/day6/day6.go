@@ -31,9 +31,8 @@ func parseString(str string, marker int) int {
 			return i
 		}
 		currRune := string(rune(str[i]))
-
 		if position, ok := set[currRune]; ok {
-			set = make(map[string]int)
+			set = make(map[string]int, marker)
 			i = position + 1
 			currRune = string(rune(str[i]))
 		}
