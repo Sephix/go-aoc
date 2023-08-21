@@ -20,9 +20,9 @@ func PrintResult() {
 	fmt.Println("Result 2: ", result2)
 }
 
-func getResult() (int, int) {
-	result := 0
-	result2 := 0
+func getResult() (string, string) {
+	result := ""
+	result2 := ""
 
 	file, _ := utils.GetFile(input)
 	fileScanner := bufio.NewScanner(file)
@@ -31,25 +31,18 @@ func getResult() (int, int) {
 	defer file.Close()
 
 	stack1, moves := parseInput(fileScanner)
-	fmt.Println(len(stack1))
 	stack2 := deepCopy(stack1)
 
-	fmt.Println(stack2)
 	for _, move := range moves {
 		runMove9000(stack1, move)
 	}
-	fmt.Println(stack2)
 	for _, move := range moves {
 		runMove9001(stack2, move)
 	}
-	for _, s := range stack1 {
-		fmt.Print(s[len(s)-1])
+	for i := range stack1 {
+		result += stack1[i][len(stack1[i])-1]
+		result2 += stack2[i][len(stack2[i])-1]
 	}
-	fmt.Print("\n")
-	for _, s := range stack2 {
-		fmt.Print(s[len(s)-1])
-	}
-	fmt.Print("\n")
 
 	return result, result2
 }
