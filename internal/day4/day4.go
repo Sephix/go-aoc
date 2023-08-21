@@ -43,57 +43,29 @@ func parseInput() (int, int) {
 }
 
 func isPairContained(firstPair string, secondPair string) bool {
-	strLowestPair := strings.Split(firstPair, "-")
-	strHighestPair := strings.Split(secondPair, "-")
+	startSecond, endSecond := convertStringPair(firstPair)
+	startFirst, endFirst := convertStringPair(secondPair)
 
-	lowestPair := make([]int, 2)
-	lowestPair[0], _ = strconv.Atoi(strLowestPair[0])
-	lowestPair[1], _ = strconv.Atoi(strLowestPair[1])
-
-	highestPair := make([]int, 2)
-	highestPair[0], _ = strconv.Atoi(strHighestPair[0])
-	highestPair[1], _ = strconv.Atoi(strHighestPair[1])
-
-	if lowestPair[0] >= highestPair[0] && highestPair[1] >= lowestPair[1] {
-		temp := lowestPair
-		lowestPair = highestPair
-		highestPair = temp
-	}
-	if highestPair[0] >= lowestPair[0] && lowestPair[1] >= highestPair[1] {
-		temp := lowestPair
-		lowestPair = highestPair
-		highestPair = temp
-	}
-
-	if lowestPair[0] >= highestPair[0] && lowestPair[1] <= highestPair[1] {
+	if startSecond >= startFirst && endSecond <= endFirst || startFirst >= startSecond && endFirst <= endSecond {
 		return true
 	}
 	return false
 }
 
 func isPairOverlap(firstPair string, secondPair string) bool {
-	strLowestPair := strings.Split(firstPair, "-")
-	strHighestPair := strings.Split(secondPair, "-")
+	startSecond, endSecond := convertStringPair(firstPair)
+	startFirst, endFirst := convertStringPair(secondPair)
 
-	lowestPair := make([]int, 2)
-	lowestPair[0], _ = strconv.Atoi(strLowestPair[0])
-	lowestPair[1], _ = strconv.Atoi(strLowestPair[1])
-
-	highestPair := make([]int, 2)
-	highestPair[0], _ = strconv.Atoi(strHighestPair[0])
-	highestPair[1], _ = strconv.Atoi(strHighestPair[1])
-
-	if lowestPair[0] >= highestPair[0] {
-		temp := lowestPair
-		lowestPair = highestPair
-		highestPair = temp
+	if startSecond <= endFirst && endSecond >= startFirst || startFirst <= endSecond && endFirst >= startSecond {
+		return true
 	}
+	return false
 
-	if lowestPair[1] <= highestPair[0] && lowestPair[1] < highestPair[0] {
-		return false
-	}
+}
 
-	fmt.Println(lowestPair, highestPair)
-	return true
-
+func convertStringPair(pair string) (int, int) {
+	slice := strings.Split(pair, "-")
+	first, _ := strconv.Atoi(slice[0])
+	second, _ := strconv.Atoi(slice[1])
+	return first, second
 }
