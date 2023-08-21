@@ -28,7 +28,7 @@ func TestFifth(t *testing.T) {
 }
 
 func runTest(testInput string, expected int, t *testing.T) {
-	result := parseString(testInput)
+	result := parseString(testInput, 4)
 	if result != expected {
 		t.Fatalf(`Test = %d, want %d`, result, expected)
 	}
