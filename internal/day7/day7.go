@@ -11,6 +11,8 @@ import (
 )
 
 var input string = "day7input.txt"
+var totalDiskSpace = 70_000_000
+var freeSpaceNeeded = 30_000_000
 
 type CmdType string
 
@@ -34,17 +36,6 @@ type DirectoryTree struct {
 	content []File
 	child   map[string]*DirectoryTree
 	parent  *DirectoryTree
-}
-
-func enqueue(queue []DirectoryTree, element DirectoryTree) []DirectoryTree {
-	queue = append(queue, element)
-	return queue
-}
-
-func dequeue(queue []DirectoryTree) DirectoryTree {
-	element := queue[0]
-	queue = queue[1:]
-	return element
 }
 
 func PrintResult() {
@@ -89,7 +80,7 @@ func getResult() (int, int) {
 		}
 	}
 
-	result = sumOf100kDir(fileSystem)
+	result, result2 = sumOf100kDir(fileSystem)
 
 	return result, result2
 }
@@ -157,7 +148,7 @@ func parseLine(line string) (File, error) {
 	}, nil
 }
 
-func sumOf100kDir(fileSystem *DirectoryTree) int {
+func sumOf100kDir(fileSystem *DirectoryTree) (int, int) {
 	root := fileSystem.execCmd(Cmd{
 		name: Cd,
 		arg:  "/",
@@ -166,28 +157,40 @@ func sumOf100kDir(fileSystem *DirectoryTree) int {
 	return bfs(*root)
 }
 
-func bfs(fileSystem DirectoryTree) int {
+func bfs(fileSystem DirectoryTree) (int, int) {
 	sum := 0
+	free := freeSpaceNeeded
+
+	spaceUsed := dfs(fileSystem)
+	spaceLeft := totalDiskSpace - spaceUsed
+	spaceToFree := freeSpaceNeeded - spaceLeft
+
+	fmt.Println(spaceUsed, spaceToFree)
+
 	queue := make([]DirectoryTree, 0)
 	queue = append(queue, fileSystem)
+
 	for len(queue) > 0 {
 		element := queue[0]
 		queue = queue[1:]
-		if elemSum := dfsSum(element); elemSum <= 100_000 {
+		if elemSum := dfs(element); elemSum <= 100_000 {
 			sum += elemSum
+		} else if elemSum >= spaceToFree && elemSum <= free {
+			free = elemSum
 		}
 		for _, child := range element.child {
 			queue = append(queue, *child)
 		}
 
 	}
-	return sum
+
+	return sum, free
 }
 
-func dfsSum(fileSystem DirectoryTree) int {
+func dfs(fileSystem DirectoryTree) int {
 	currentDirSize := sumDirContent(fileSystem)
 	for _, child := range fileSystem.child {
-		currentDirSize += dfsSum(*child)
+		currentDirSize += dfs(*child)
 	}
 	return currentDirSize
 }
