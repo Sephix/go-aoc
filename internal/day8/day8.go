@@ -180,8 +180,6 @@ func computeTreeValue(treeMatrix [][]*Tree, top int, left int) int {
 	bottomLine := getTreeLine(treeMatrix, top, left, "bottom")
 	leftLine := getTreeLine(treeMatrix, top, left, "left")
 
-	fmt.Println(leftLine)
-
 	topLineValue := treeLineValue(tree, topLine)
 	rightLineValue := treeLineValue(tree, rightLine)
 	bottomLineValue := treeLineValue(tree, bottomLine)
