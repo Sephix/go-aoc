@@ -165,8 +165,6 @@ func bfs(fileSystem DirectoryTree) (int, int) {
 	spaceLeft := totalDiskSpace - spaceUsed
 	spaceToFree := freeSpaceNeeded - spaceLeft
 
-	fmt.Println(spaceUsed, spaceToFree)
-
 	queue := make([]DirectoryTree, 0)
 	queue = append(queue, fileSystem)
 
