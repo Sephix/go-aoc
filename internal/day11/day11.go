@@ -76,7 +76,6 @@ func getResult1() int {
 	highestTwoMonkey := make([]int, 2, 2)
 	for _, monkey := range monkeys {
 		currentMonkeyBiz := monkey.itemsHandled
-		fmt.Println(currentMonkeyBiz)
 		if currentMonkeyBiz > highestTwoMonkey[1] {
 			highestTwoMonkey[1] = currentMonkeyBiz
 			if highestTwoMonkey[1] > highestTwoMonkey[0] {

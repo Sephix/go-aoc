@@ -4,6 +4,7 @@ import (
 	"github.com/sephix/go-aoc/internal/day1"
 	"github.com/sephix/go-aoc/internal/day10"
 	"github.com/sephix/go-aoc/internal/day11"
+	"github.com/sephix/go-aoc/internal/day12"
 	"github.com/sephix/go-aoc/internal/day2"
 	"github.com/sephix/go-aoc/internal/day3"
 	"github.com/sephix/go-aoc/internal/day4"
@@ -26,4 +27,5 @@ func main() {
 	day9.PrintResult()
 	day10.PrintResult()
 	day11.PrintResult()
+	day12.PrintResult()
 }
